@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>History</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Challenge</a>
+        <a href="history.html">History</a>
+        <a href="submit.html">Submit</a>
+        <a href="stats.html">Stats</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <h1>📜 History</h1>
+    <ul id="list"></ul>
+
+    <script>
+        let history = JSON.parse(localStorage.getItem("history")) || [];
+        let list = document.getElementById("list");
+
+        function render() {
+            list.innerHTML = "";
+            history.forEach((item, index) => {
+                let li = document.createElement("li");
+                li.innerText = item;
+
+                let btn = document.createElement("button");
+                btn.innerText = "❌";
+                btn.onclick = () => {
+                    history.splice(index, 1);
+                    localStorage.setItem("history", JSON.stringify(history));
+                    render();
+                };
+
+                li.appendChild(btn);
+                list.appendChild(li);
+            });
+        }
+
+        render();
+
+        let theme = localStorage.getItem("theme") || "dark";
+        document.body.className = theme;
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Challenge</a>
+        <a href="history.html">History</a>
+        <a href="submit.html">Submit</a>
+        <a href="stats.html">Stats</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <h1>⚙️ Settings</h1>
+
+    <h3>Difficulty</h3>
+    <button onclick="setDifficulty('easy')">Easy</button>
+    <button onclick="setDifficulty('medium')">Medium</button>
+    <button onclick="setDifficulty('hard')">Hard</button>
+
+    <h3>Theme</h3>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+
+    <h3>Reset</h3>
+    <button onclick="reset()">Reset All Data</button>
+
+    <script>
+        function setDifficulty(level) {
+            localStorage.setItem("difficulty", level);
+            alert("Set to " + level);
+        }
+
+        function toggleTheme() {
+            let theme = localStorage.getItem("theme") || "dark";
+            theme = theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            location.reload();
+        }
+
+        function reset() {
+            localStorage.clear();
+            alert("Reset done");
+        }
+
+        let theme = localStorage.getItem("theme") || "dark";
+        document.body.className = theme;
+    </script>
+
+</body>
+
+</html>

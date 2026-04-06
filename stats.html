@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Stats</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Challenge</a>
+        <a href="history.html">History</a>
+        <a href="submit.html">Submit</a>
+        <a href="stats.html">Stats</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <h1>📊 Stats</h1>
+
+    <p id="stats"></p>
+
+    <script>
+        let history = JSON.parse(localStorage.getItem("history")) || [];
+        let xp = Number(localStorage.getItem("xp")) || 0;
+        let streak = Number(localStorage.getItem("streak")) || 0;
+
+        let level = Math.floor(xp / 50);
+
+        document.getElementById("stats").innerHTML = `
+Completed: ${history.length}<br>
+XP: ${xp}<br>
+Level: ${level}<br>
+🔥 Streak: ${streak}
+`;
+
+        let theme = localStorage.getItem("theme") || "dark";
+        document.body.className = theme;
+    </script>
+
+</body>
+
+</html>

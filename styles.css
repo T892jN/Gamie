@@ -1,0 +1,39 @@
+body {
+    font-family: Arial;
+    text-align: center;
+    margin: 0;
+}
+
+body.dark {
+    background: #0f172a;
+    color: white;
+}
+
+body.light {
+    background: #f1f5f9;
+    color: black;
+}
+
+nav {
+    padding: 15px;
+    background: #1e293b;
+}
+
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    background: #3b82f6;
+    color: white;
+}
+
+input {
+    padding: 10px;
+}

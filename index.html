@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Daily Challenge Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Challenge</a>
+        <a href="history.html">History</a>
+        <a href="submit.html">Submit</a>
+        <a href="stats.html">Stats</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <h1>🎯 Daily Challenge</h1>
+    <p id="challenge">Click below to start!</p>
+
+    <button onclick="newChallenge()">🎲 New Challenge</button>
+    <button onclick="completeChallenge()">✅ Complete</button>
+
+    <script>
+        let baseChallenges = {
+            easy: ["Drink water 💧", "Go outside", "Stretch", "Play a video game", "Drink a bottle of water", "Have dinner", "Reroll",
+                "Inspect this page"
+            ],
+            medium: ["Do 10 pushups", "Clean desk", "Learn something", "learn something in quantum physics", "Drink 3 cans of water",
+                "Download a free video game on steam", "Drink coffee", "Play your least favorite video game"
+            ],
+            hard: ["Workout 20 min", "Code a feature", "Deep clean room", "Learn 5 things in your favorite video game", "Have mcdonalds",
+                "Switch difficulty to easy and reroll 10 times", "Learn how to build a PC", "Make a how to video", "share this site with someone"]
+        };
+
+        function getDifficulty() {
+            return localStorage.getItem("difficulty") || "easy";
+        }
+
+        function getAllChallenges() {
+            let custom = JSON.parse(localStorage.getItem("custom")) || [];
+            return [...baseChallenges[getDifficulty()], ...custom];
+        }
+
+        function newChallenge() {
+            let challenges = getAllChallenges();
+            let random = challenges[Math.floor(Math.random() * challenges.length)];
+            document.getElementById("challenge").innerText = random;
+            localStorage.setItem("todayChallenge", random);
+        }
+
+        function completeChallenge() {
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            let current = document.getElementById("challenge").innerText;
+
+            history.push(current);
+            localStorage.setItem("history", JSON.stringify(history));
+
+            let xp = Number(localStorage.getItem("xp")) || 0;
+            xp += 10;
+            localStorage.setItem("xp", xp);
+
+            let streak = Number(localStorage.getItem("streak")) || 0;
+            streak += 1;
+            localStorage.setItem("streak", streak);
+
+            localStorage.setItem("lastCompleted", new Date().toDateString());
+
+            let audio = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
+            audio.play();
+
+            alert("🔥 Completed! +10 XP");
+        }
+
+        function checkDailyReset() {
+            let last = localStorage.getItem("lastCompleted");
+            let today = new Date().toDateString();
+            if (last && last !== today) {
+                localStorage.setItem("streak", 0);
+            }
+        }
+
+        window.onload = () => {
+            checkDailyReset();
+            let saved = localStorage.getItem("todayChallenge");
+            if (saved) document.getElementById("challenge").innerText = saved;
+
+            let theme = localStorage.getItem("theme") || "dark";
+            document.body.className = theme;
+        };
+    </script>
+
+</body>
+
+</html>
